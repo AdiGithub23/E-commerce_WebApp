@@ -1,0 +1,10 @@
+Product CRUD  - Working
+Category CRUD - Working
+Authentication- Working
+Authorization - Working
+User Cart     - Working
+
+
+Missing:
+Image Upload
+Search Component

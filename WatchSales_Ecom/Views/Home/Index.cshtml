@@ -1,0 +1,132 @@
+﻿@model IEnumerable<WatchSales_Ecom.Models.Product>
+
+@* @model WatchSales_Ecom.Models.DTO.ProductVM *@
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@*Search Component Tryout*@
+<div id="BLABLA">
+    @*
+    <form asp-controller="Products" asp-action="Index" method="get">
+    <p>
+    Search Term: <input type="text" name="SearchString" placeholder="Search Products" />
+    <input type="submit" value="Filter" />
+
+    <select asp-for="ProductCategory" asp-items="Model.Categories">
+    <option value="">All</option>
+    </select>
+    </p>
+    </form> *@
+
+    @* <div class="my-2">
+    <form asp-controller="Home" asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
+    <div class="col-12">
+    <label class="visually-hidden" for="sTerm">SearchProduct</label>
+    <div class="input-group">
+    <input type="text" class="form-control" id="sTerm" name="sTerm" placeholder="Search Pruduct">
+    @* These id and name are coming from the Home Controller *@
+    @*</div>
+    </div>
+
+    <div class="col-12">
+    <label class="visually-hidden" for="genreId">Categories</label>
+    <select class="form-select" id="categoryId" name="categoryId">
+    <option selected>Choose...</option>
+    @foreach (var category in Model.Categories)
+    {
+    <option value="@category.CategoryId">@category.CategoryName</option>
+    }
+    </select>
+    </div>
+    <div class="col-12">
+    <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+    </form>
+    </div> *@
+
+
+    @* <div class="d-flex justify-content-center">
+    <form asp-controller="Home" asp-action="Index" method="get" class="w-100">
+    <div class="input-group rounded mb-3">
+    <input type="search" class="form-control rounded" placeholder="Search Courses" aria-label="Search" aria-describedby="search-addon" name="SearchString">
+    <button type="submit" class="btn btn-primary border-0" id="search-addon">
+    <i class="fas fa-search"></i>
+    </button>
+    </div>
+    </form>
+    </div> *@
+
+</div>
+
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductImage)
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category) 
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @* @Html.DisplayFor(modelItem => item.ProductImage) *@
+                    @* <img src="~/images/@item.ProductImage" alt="@item.ProductImage" class="img-thumbnail" /> *@
+                    <img src="~/images/@item.ProductImage" height="100" width="100" />
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    @* <a asp-controller="Products" asp-action="AddToCart" asp-route-id="@item.ProductId">Add to Cart</a> | *@
+                    @* @if (User.Identity.IsAuthenticated)
+                    { *@
+
+                    @if (User.IsInRole("Customer"))
+                    {
+                        <form asp-action="AddToCart" asp-controller="Products">
+                            <input type="hidden" name="productId" value="@item.ProductId" />
+                            <input type="number" name="quantity" value="1" min="1" style="width: 50px;"/>
+                            <button type="submit">Add to Cart</button>
+                        </form>
+                    }
+
+
+                    @* } *@
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

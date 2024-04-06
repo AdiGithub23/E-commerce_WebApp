@@ -1,0 +1,54 @@
+﻿@model List<WatchSales_Ecom.Models.CartItem>
+
+@{
+    ViewData["Title"] = "My Cart";
+}
+
+<h1>My Cart</h1>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductId">@item.Product.ProductName</a>
+                    </td>
+                    <td>
+                        <form asp-controller="Cart" asp-action="UpdateQuantity">
+                            <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                            <input type="number" min="1" name="quantity" value="@item.Quantity" style="width: 50px;" />
+                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                        </form>
+                    </td>
+                    <td>
+                        @item.Product.ProductPrice x @item.Quantity = @(item.Product.ProductPrice*item.Quantity)
+                    </td>
+                    <td>
+                        <form asp-controller="Cart" asp-action="RemoveFromCart">
+                            <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-controller="Home" asp-action="Index">Proceed to Checkout</a>
+}
+else
+{
+    <p>Your cart is currently empty.</p>
+}
+
